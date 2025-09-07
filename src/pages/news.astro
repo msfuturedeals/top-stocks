@@ -1,9 +1,9 @@
 ---
-import Layout from '../layouts/BlogPost.astro';
+import PageLayout from '../layouts/PageLayout.astro';
 import { getCollection } from 'astro:content';
-const posts = await getCollection('blog'); // nutzt die vorhandene "blog"-Collection
+const posts = await getCollection('blog');
 ---
-<Layout frontmatter={{ title: 'News', description: 'Fundamentale Kurzmeldungen' }}>
+<PageLayout title="News" description="Fundamentale Kurzmeldungen">
   <h1 class="text-2xl font-bold mb-4">Neueste Beiträge</h1>
   <ul class="space-y-3">
     {posts.map((p) => (
@@ -13,4 +13,4 @@ const posts = await getCollection('blog'); // nutzt die vorhandene "blog"-Collec
       </li>
     ))}
   </ul>
-</Layout>
+</PageLayout>

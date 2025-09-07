@@ -1,9 +1,9 @@
 ---
-import Layout from '../layouts/BlogPost.astro';
+import PageLayout from '../layouts/PageLayout.astro';
 import AdSlot from '../components/AdSlot.astro';
 ---
-<Layout frontmatter={{ title: 'Top Stocks Radar', description: 'Fundamentale Katalysatoren – automatisch.' }}>
-  <section class="py-8">
+<PageLayout title="Top Stocks Radar" description="Fundamentale Katalysatoren – automatisch.">
+  <section class="py-4">
     <h1 class="text-3xl font-bold">Aktien-News & wöchentliche Empfehlung</h1>
     <p class="mt-2">Tägliche Kurzmeldungen (bald automatisch). 1×/Woche eine Gratis-Empfehlung.</p>
     <div class="mt-4 flex gap-3">
@@ -16,4 +16,4 @@ import AdSlot from '../components/AdSlot.astro';
     <h2 class="text-xl font-semibold">Aktie der Woche</h2>
     <p class="text-sm text-gray-600 mt-1">Wird automatisch befüllt.</p>
   </section>
-</Layout>
+</PageLayout>

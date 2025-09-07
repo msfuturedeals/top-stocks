@@ -1,4 +1,6 @@
-:root { --content-w: 760px; }
+:root { --content-w: 920px; }
 .container{max-width:var(--content-w)}
 .prose h1,.prose h2,.prose h3{line-height:1.2}
-.prose img{border-radius:12px}
+.prose a{ text-underline-offset: 4px; }
+html{ scroll-behavior:smooth; }
+body{ font-feature-settings: "liga","kern","ss01","cv01"; }

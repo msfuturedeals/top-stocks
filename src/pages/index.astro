@@ -1,45 +1,57 @@
 ---
 import PageLayout from '../layouts/PageLayout.astro';
-import { getCollection } from 'astro:content';
+import FeaturedCard from '../components/FeaturedCard.astro';
 import AdSlot from '../components/AdSlot.astro';
+import { getCollection } from 'astro:content';
 
-const allArticles = (await getCollection('articles'))
-  .sort((a,b)=> b.data.pubDate.getTime() - a.data.pubDate.getTime());
-const featured = allArticles[0];
+// Neueste News aus Content-Collection
 const news = (await getCollection('news'))
   .sort((a,b)=> b.data.pubDate.getTime() - a.data.pubDate.getTime())
-  .slice(0,8);
+  .slice(0,6);
+
+// Featured-Artikel (Beispiel-Link wie bei kapitaltrends)
+const featured = {
+  href: 'https://www.kapitaltrends.de/first-phosphate-der-stille-rohstoff-gewinner-der-batterie-revolution',
+  title: 'First Phosphate – Der stille Rohstoff-Gewinner der Batterie-Revolution?',
+  excerpt: 'Warum Phosphat für LFP-Zellen strategisch wird und wo die Katalysatoren liegen.',
+  // Nimm ein valides Bild; externe URL ist hier am zuverlässigsten
+  image: 'https://images.unsplash.com/photo-1502786129293-79981df4e689?q=80&w=1600&auto=format&fit=crop',
+  meta: new Date().toLocaleDateString('de-CH')
+};
 ---
-<PageLayout title="Top Stocks Radar" description="Fundamentale Katalysatoren – automatisch.">
-  <section>
-    <h1>Aktien-News & Analysen</h1>
-    <p>Tägliche Kurzmeldungen. Wöchentlich mindestens eine ausführliche Analyse.</p>
+<PageLayout title="Aktien-News & Analysen" description="Tägliche Kurzmeldungen. Wöchentlich mindestens eine ausführliche Analyse.">
+  <section class="mb-8 sm:mb-10">
+    <h1 class="text-3xl sm:text-4xl font-bold tracking-tight">Aktien-News & Analysen</h1>
+    <p class="mt-2 text-zinc-600">Tägliche Kurzmeldungen. Wöchentlich mindestens eine ausführliche Analyse.</p>
   </section>
 
-  {featured && (
-    <section class="mt-8 grid md:grid-cols-2 gap-6 items-start">
-      <div>
-        <a href={`/top-stocks/artikel/${featured.slug}/`}>
-          {featured.data.hero && <img src={featured.data.hero} alt={featured.data.title} class="rounded-xl" loading="eager" />}
-          <h2 class="mt-3 text-2xl font-semibold">{featured.data.title}</h2>
-        </a>
-        {featured.data.description && <p class="text-zinc-600 mt-2">{featured.data.description}</p>}
-        <p class="text-xs text-zinc-500 mt-1">{new Date(featured.data.pubDate).toLocaleDateString('de-CH')}</p>
-      </div>
-      <AdSlot />
-    </section>
-  )}
+  <section class="mb-10 sm:mb-12">
+    <FeaturedCard {...featured} />
+  </section>
+
+  <AdSlot />
 
   <section class="mt-10">
-    <h3 class="text-lg font-semibold mb-3">Neueste News</h3>
+    <h2 class="text-2xl font-semibold tracking-tight mb-4">Neueste News</h2>
     <ul class="space-y-3">
-      {news.map((n)=>(
-        <li>
-          <a class="underline" href={`/top-stocks/news/${n.slug}/`}>{n.data.title}</a>
-          {n.data.description && <div class="text-sm text-zinc-600">{n.data.description}</div>}
-          <div class="text-xs text-zinc-500">{new Date(n.data.pubDate).toLocaleDateString('de-CH')}{n.data.ticker && <> • {n.data.ticker}</>}</div>
+      {news.map((n) => (
+        <li class="leading-tight">
+          <a class="text-[17px] font-medium text-zinc-900 hover:underline underline-offset-4"
+             href={`/top-stocks/news/${n.slug}/`}>{n.data.title}</a>
+          {n.data.description && <div class="text-sm text-zinc-600 mt-0.5">{n.data.description}</div>}
+          <div class="text-xs text-zinc-500 mt-0.5">{n.data.pubDate.toLocaleDateString('de-CH')}</div>
         </li>
       ))}
+      {news.length === 0 && <li class="text-sm text-zinc-500">Noch keine News.</li>}
     </ul>
+
+    <div class="mt-6">
+      <a href="/top-stocks/news" class="inline-flex items-center gap-2 text-sm px-4 py-2 rounded-lg border hover:bg-zinc-50">
+        Alle News ansehen
+      </a>
+      <a href="/top-stocks/disclaimer" class="ml-3 inline-flex items-center gap-2 text-sm px-4 py-2 rounded-lg border hover:bg-zinc-50">
+        Disclaimer
+      </a>
+    </div>
   </section>
 </PageLayout>

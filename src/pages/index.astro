@@ -3,17 +3,17 @@ import PageLayout from '../layouts/PageLayout.astro';
 import AdSlot from '../components/AdSlot.astro';
 ---
 <PageLayout title="Top Stocks Radar" description="Fundamentale Katalysatoren – automatisch.">
-  <section class="py-4">
-    <h1 class="text-3xl font-bold">Aktien-News & wöchentliche Empfehlung</h1>
-    <p class="mt-2">Tägliche Kurzmeldungen (bald automatisch). 1×/Woche eine Gratis-Empfehlung.</p>
-    <div class="mt-4 flex gap-3">
+  <section>
+    <h1>Aktien-News & wöchentliche Empfehlung</h1>
+    <p>Tägliche Kurzmeldungen (bald automatisch). 1×/Woche eine Gratis-Empfehlung.</p>
+    <p class="mt-4">
       <a href="/top-stocks/news" class="px-4 py-2 rounded-lg bg-black text-white">News ansehen</a>
-      <a href="/top-stocks/disclaimer" class="px-4 py-2 rounded-lg border">Disclaimer</a>
-    </div>
+      <a href="/top-stocks/disclaimer" class="ml-3 px-4 py-2 rounded-lg border">Disclaimer</a>
+    </p>
   </section>
   <AdSlot />
-  <section class="mt-8">
-    <h2 class="text-xl font-semibold">Aktie der Woche</h2>
-    <p class="text-sm text-gray-600 mt-1">Wird automatisch befüllt.</p>
+  <section class="mt-10">
+    <h2>Aktie der Woche</h2>
+    <p>Wird automatisch befüllt.</p>
   </section>
 </PageLayout>

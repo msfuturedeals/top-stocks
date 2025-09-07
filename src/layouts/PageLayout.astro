@@ -4,14 +4,17 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 const { title = 'Top Stocks', description = '' } = Astro.props;
 ---
-<html lang="de">
+<html lang="de" class="scroll-smooth">
   <head>
     <BaseHead title={title} description={description} />
+    <link rel="stylesheet" href="/top-stocks/src/styles/theme.css">
   </head>
-  <body>
+  <body class="min-h-screen bg-gradient-to-b from-zinc-50 to-white text-zinc-900">
     <Header />
-    <main class="container mx-auto px-4 py-8">
-      <slot />
+    <main class="container mx-auto px-4 py-10">
+      <article class="prose prose-zinc max-w-none">
+        <slot />
+      </article>
     </main>
     <Footer />
   </body>

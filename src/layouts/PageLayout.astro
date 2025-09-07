@@ -2,12 +2,12 @@
 import BaseHead from '../components/BaseHead.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import '../styles/theme.css';   // CSS wird gebundled
 const { title = 'Top Stocks', description = '' } = Astro.props;
 ---
 <html lang="de" class="scroll-smooth">
   <head>
     <BaseHead title={title} description={description} />
-    <link rel="stylesheet" href="/top-stocks/src/styles/theme.css">
   </head>
   <body class="min-h-screen bg-gradient-to-b from-zinc-50 to-white text-zinc-900">
     <Header />

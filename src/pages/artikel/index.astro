@@ -1,0 +1,20 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import { getCollection } from 'astro:content';
+const entries = (await getCollection('articles')).sort((a,b)=> b.data.pubDate.getTime() - a.data.pubDate.getTime());
+---
+<PageLayout title="Analysen" description="Langform-Analysen & Katalysatoren">
+  <h1>Analysen</h1>
+  <ul class="space-y-6">
+    {entries.map((a)=>(
+      <li>
+        <a href={`/top-stocks/artikel/${a.slug}/`} class="no-underline">
+          {a.data.hero && <img src={a.data.hero} alt={a.data.title} class="rounded-xl" loading="lazy" />}
+          <h2 class="mt-2 text-xl font-semibold underline">{a.data.title}</h2>
+        </a>
+        {a.data.description && <p class="text-zinc-600 mt-1">{a.data.description}</p>}
+        <p class="text-xs text-zinc-500 mt-1">{new Date(a.data.pubDate).toLocaleDateString('de-CH')}</p>
+      </li>
+    ))}
+  </ul>
+</PageLayout>

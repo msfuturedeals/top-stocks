@@ -1,0 +1,29 @@
+---
+import PageLayout from './PageLayout.astro';
+const { title, description = '', pubDate, author = 'Redaktion', hero, ticker, tags = [] } = Astro.props;
+
+const canonical = new URL(Astro.url.pathname, Astro.site ?? 'https://msfuturedeals.github.io/top-stocks').toString();
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: title,
+  description,
+  datePublished: pubDate?.toISOString?.() ?? pubDate,
+  author: { '@type': 'Person', name: author },
+  mainEntityOfPage: canonical,
+};
+---
+<PageLayout title={title} description={description}>
+  <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
+  {hero && <img src={hero} alt={title} loading="eager" style="width:100%;height:auto;border-radius:12px" />}
+  <h1 class="mb-2">{title}</h1>
+  <p class="text-sm text-zinc-600">
+    {new Date(pubDate).toLocaleDateString('de-CH')}
+    {ticker && <> • {ticker}</>}
+    {author && <> • {author}</>}
+  </p>
+  {tags.length > 0 && (
+    <p class="mt-1 text-xs text-zinc-500">Tags: {tags.join(' · ')}</p>
+  )}
+  <div class="mt-6"><slot /></div>
+</PageLayout>

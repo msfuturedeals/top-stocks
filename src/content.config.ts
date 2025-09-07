@@ -1,16 +1,20 @@
 import { z, defineCollection } from 'astro:content';
 
-const blog = defineCollection({
+// Langform-Analysen
+const articles = defineCollection({
   type: 'content',
   schema: z.object({
     title: z.string(),
-    description: z.string(),
+    description: z.string().optional(),
     pubDate: z.coerce.date(),
-    updatedDate: z.coerce.date().optional(),
-    heroImage: z.string().optional(),
+    author: z.string().optional(),
+    hero: z.string().url().optional(),
+    ticker: z.string().optional(),
+    tags: z.array(z.string()).optional(),
   }),
 });
 
+// Kurzmeldungen / News
 const news = defineCollection({
   type: 'content',
   schema: z.object({
@@ -22,4 +26,4 @@ const news = defineCollection({
   }),
 });
 
-export const collections = { blog, news };
+export const collections = { articles, news };

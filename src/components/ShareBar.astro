@@ -1,0 +1,10 @@
+---
+const { title } = Astro.props;
+const url = new URL(Astro.url.pathname, Astro.site ?? 'https://msfuturedeals.github.io/top-stocks').toString();
+const tw = `https://twitter.com/intent/tweet?text=${encodeURIComponent(title)}&url=${encodeURIComponent(url)}`;
+const li = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`;
+---
+<div class="mt-8 flex gap-3 text-sm">
+  <a href={tw} target="_blank" rel="noopener" class="underline">Teilen auf X</a>
+  <a href={li} target="_blank" rel="noopener" class="underline">Teilen auf LinkedIn</a>
+</div>

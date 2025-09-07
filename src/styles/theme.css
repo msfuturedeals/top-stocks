@@ -1,3 +1,4 @@
-:root { --content-w: 800px; }
-.prose h1,.prose h2,.prose h3{line-height:1.2}
+:root { --content-w: 760px; }
 .container{max-width:var(--content-w)}
+.prose h1,.prose h2,.prose h3{line-height:1.2}
+.prose img{border-radius:12px}

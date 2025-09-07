@@ -1,0 +1,25 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const entries = await getCollection('news');
+  return entries.map((n) => ({
+    params: { slug: n.slug },
+    props: { n },
+  }));
+}
+const { n } = Astro.props;
+const { Content } = await n.render();
+---
+<PageLayout title={n.data.title} description={n.data.description ?? ''}>
+  <h1 class="text-3xl font-semibold">{n.data.title}</h1>
+  <p class="text-xs text-zinc-500">
+    {new Date(n.data.pubDate).toLocaleDateString('de-CH')}
+    {n.data.source && <> • {n.data.source}</>}
+    {n.data.ticker && <> • {n.data.ticker}</>}
+  </p>
+  <div class="mt-6">
+    <Content />
+  </div>
+</PageLayout>

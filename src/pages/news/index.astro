@@ -1,18 +1,16 @@
 ---
 import PageLayout from '../../layouts/PageLayout.astro';
 import { getCollection } from 'astro:content';
-
-const items = (await getCollection('news'))
-  .sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime());
+const items = (await getCollection('news')).sort((a,b)=> b.data.pubDate.getTime()-a.data.pubDate.getTime());
 ---
 <PageLayout title="News" description="Fundamentale Kurzmeldungen">
-  <h1 class="text-2xl font-bold mb-4">Neueste News</h1>
-  <ul class="space-y-5">
-    {items.map((n) => (
+  <h1>News</h1>
+  <ul class="space-y-4">
+    {items.map((n)=>(
       <li>
         <a class="text-lg underline" href={`/top-stocks/news/${n.slug}/`}>{n.data.title}</a>
-        {n.data.description && <div class="text-sm text-gray-600">{n.data.description}</div>}
-        <div class="text-xs text-gray-500">{n.data.pubDate.toLocaleDateString()}</div>
+        {n.data.description && <div class="text-sm text-zinc-600">{n.data.description}</div>}
+        <div class="text-xs text-zinc-500">{new Date(n.data.pubDate).toLocaleDateString('de-CH')}{n.data.ticker && <> • {n.data.ticker}</>}</div>
       </li>
     ))}
   </ul>

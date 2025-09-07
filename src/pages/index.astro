@@ -1,19 +1,45 @@
 ---
 import PageLayout from '../layouts/PageLayout.astro';
+import { getCollection } from 'astro:content';
 import AdSlot from '../components/AdSlot.astro';
+
+const allArticles = (await getCollection('articles'))
+  .sort((a,b)=> b.data.pubDate.getTime() - a.data.pubDate.getTime());
+const featured = allArticles[0];
+const news = (await getCollection('news'))
+  .sort((a,b)=> b.data.pubDate.getTime() - a.data.pubDate.getTime())
+  .slice(0,8);
 ---
 <PageLayout title="Top Stocks Radar" description="Fundamentale Katalysatoren – automatisch.">
   <section>
-    <h1>Aktien-News & wöchentliche Empfehlung</h1>
-    <p>Tägliche Kurzmeldungen (bald automatisch). 1×/Woche eine Gratis-Empfehlung.</p>
-    <p class="mt-4">
-      <a href="/top-stocks/news" class="px-4 py-2 rounded-lg bg-black text-white">News ansehen</a>
-      <a href="/top-stocks/disclaimer" class="ml-3 px-4 py-2 rounded-lg border">Disclaimer</a>
-    </p>
+    <h1>Aktien-News & Analysen</h1>
+    <p>Tägliche Kurzmeldungen. Wöchentlich mindestens eine ausführliche Analyse.</p>
   </section>
-  <AdSlot />
+
+  {featured && (
+    <section class="mt-8 grid md:grid-cols-2 gap-6 items-start">
+      <div>
+        <a href={`/top-stocks/artikel/${featured.slug}/`}>
+          {featured.data.hero && <img src={featured.data.hero} alt={featured.data.title} class="rounded-xl" loading="eager" />}
+          <h2 class="mt-3 text-2xl font-semibold">{featured.data.title}</h2>
+        </a>
+        {featured.data.description && <p class="text-zinc-600 mt-2">{featured.data.description}</p>}
+        <p class="text-xs text-zinc-500 mt-1">{new Date(featured.data.pubDate).toLocaleDateString('de-CH')}</p>
+      </div>
+      <AdSlot />
+    </section>
+  )}
+
   <section class="mt-10">
-    <h2>Aktie der Woche</h2>
-    <p>Wird automatisch befüllt.</p>
+    <h3 class="text-lg font-semibold mb-3">Neueste News</h3>
+    <ul class="space-y-3">
+      {news.map((n)=>(
+        <li>
+          <a class="underline" href={`/top-stocks/news/${n.slug}/`}>{n.data.title}</a>
+          {n.data.description && <div class="text-sm text-zinc-600">{n.data.description}</div>}
+          <div class="text-xs text-zinc-500">{new Date(n.data.pubDate).toLocaleDateString('de-CH')}{n.data.ticker && <> • {n.data.ticker}</>}</div>
+        </li>
+      ))}
+    </ul>
   </section>
 </PageLayout>
